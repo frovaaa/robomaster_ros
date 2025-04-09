@@ -362,8 +362,9 @@ class Chassis(Module):
                 w3=rpm_from_linear_speed(rear_left), w4=rpm_from_linear_speed(rear_right),
                 timeout=self.timeout)
         else:
+            angular_z = deg(msg.angular.z) if not math.isnan(msg.angular.z) else 0.0
             self.api.drive_speed(
-                x=msg.linear.x, y=-msg.linear.y, z=-deg(msg.angular.z), timeout=self.timeout)
+                x=msg.linear.x, y=-msg.linear.y, z=-angular_z, timeout=self.timeout)
 
     def has_received_wheel_speeds(self, msg: robomaster_msgs.msg.WheelSpeeds) -> None:
         self.api.drive_wheels(
